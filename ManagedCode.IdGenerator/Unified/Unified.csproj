@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Unified is immutable high performance Id library.</Description>
+    <PackageProjectUrl>https://github.com/SergiySeletsky/Unified</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SergiySeletsky/Unified</RepositoryUrl>
+    <PackageTags>unified, scalable, unique, id, generator, distributed, partitioning, sharding, snowflake</PackageTags>
+    <PackageReleaseNotes>Performance improvements</PackageReleaseNotes>
+    <SignAssembly>false</SignAssembly>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <AssemblyVersion>$(UnifiedVersion)</AssemblyVersion>
+    <FileVersion>$(UnifiedVersion)</FileVersion>
+    <Version>$(UnifiedVersion)</Version>
+  </PropertyGroup>
+
+</Project>

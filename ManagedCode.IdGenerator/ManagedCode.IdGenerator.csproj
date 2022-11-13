@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <LangVersion>11</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <!--NuGet-->
+    <PropertyGroup>
+        <Title>ManagedCode.IdGenerator</Title>
+        <PackageId>ManagedCode.IdGenerator</PackageId>
+        <Description>Id Generator for .NET</Description>
+        <PackageTags>managedcode, id, generator</PackageTags>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Unified" Version="1.0.6"/>
+    </ItemGroup>
+
+</Project>
