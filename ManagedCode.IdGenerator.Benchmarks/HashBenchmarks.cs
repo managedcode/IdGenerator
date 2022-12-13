@@ -1,8 +1,9 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Engines;
 
 namespace ManagedCode.IdGenerator.Benchmarks;
 
-[SimpleJob]
+[SimpleJob(RunStrategy.ColdStart, targetCount: 3)]
 [MemoryDiagnoser]
 [MemoryRandomization]
 [DisassemblyDiagnoser]
