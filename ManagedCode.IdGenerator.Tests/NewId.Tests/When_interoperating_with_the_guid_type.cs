@@ -183,7 +183,7 @@ public class When_interoperating_with_the_guid_type
 
         var ng = IdGenerator.NewId.NewId.FromSequentialGuid(g);
 
-        Assert.Equal(n.ToString(), ng.ToString()); //todo add EQUAL
+        Assert.True(n.ToString() == ng.ToString()); //todo add EQUAL
 
         // Also checks to see if this would throw
         Assert.True(ng.Timestamp != default);

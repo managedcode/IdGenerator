@@ -29,7 +29,7 @@ public class Generating_ids_over_time
             SqlGuid left = ids[i].ToGuid();
             SqlGuid right = ids[i + 1].ToGuid();
             //Assert.Less(left, right);
-            Assert.True((left > right).Value);
+            Assert.True((left < right).Value);
             if (i % 128 == 0)
             {
                 Console.WriteLine("Normal: {0} Sql: {1}", left, ids[i].ToSequentialGuid());

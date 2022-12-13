@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlTypes;
 using System.Diagnostics;
+using System.Net.Mail;
 using FluentAssertions;
 using ManagedCode.IdGenerator.NewId;
 using Xunit;
@@ -9,6 +10,16 @@ namespace ManagedCode.IdGenerator.Tests.NewId.Tests;
 
 public class Generating_ids_and_preserve_same_order_for_sql_and_ToSequentialGuid
 {
+
+    public Generating_ids_and_preserve_same_order_for_sql_and_ToSequentialGuid()
+    {
+        _start = DateTime.UtcNow;
+        _stopwatch = Stopwatch.StartNew();
+
+        _tickProvider = new MockTickProvider(GetTicks());
+        _workerIdProvider = new MockNetworkProvider(BitConverter.GetBytes(1234567890L));
+    }
+    
     [Fact]
     public void Should_keep_them_ordered_for_sql_server_when_using_array_call()
     {
@@ -27,7 +38,7 @@ public class Generating_ids_and_preserve_same_order_for_sql_and_ToSequentialGuid
             SqlGuid left = ids[i].ToGuid();
             SqlGuid right = ids[i + 1].ToGuid();
             //Assert.Less(left, right);
-            Assert.True((left > right).Value);
+            Assert.True((left < right).Value);
             if (i % 128 == 0)
             {
                 Console.WriteLine("Normal: {0} Sql: {1}", left, ids[i].ToSequentialGuid());
@@ -53,7 +64,7 @@ public class Generating_ids_and_preserve_same_order_for_sql_and_ToSequentialGuid
             var left = ids[i].ToSequentialGuid();
             var right = ids[i + 1].ToSequentialGuid();
             //Assert.Less(left, right);
-            Assert.True(left > right);
+            Assert.True(left < right);
             if (i % 128 == 0)
             {
                 Console.WriteLine("Sql: {0}", left);
@@ -146,17 +157,7 @@ public class Generating_ids_and_preserve_same_order_for_sql_and_ToSequentialGuid
 #endif
 
     #endregion
-
-   // [SetUp]
-    public void Init()
-    {
-        _start = DateTime.UtcNow;
-        _stopwatch = Stopwatch.StartNew();
-
-        _tickProvider = new MockTickProvider(GetTicks());
-        _workerIdProvider = new MockNetworkProvider(BitConverter.GetBytes(1234567890L));
-    }
-
+    
     private ITickProvider _tickProvider;
     private IWorkerIdProvider _workerIdProvider;
     private DateTime _start;

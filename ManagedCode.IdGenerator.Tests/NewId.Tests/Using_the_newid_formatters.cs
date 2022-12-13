@@ -13,8 +13,8 @@ public class Using_the_newid_formatters
     public void Should_compare_known_conversions()
     {
         var directory = AppDomain.CurrentDomain.BaseDirectory;
-        var newIdFileName = Path.Combine(directory, "guids.txt");
-        var textsFileName = Path.Combine(directory, "texts.txt");
+        var newIdFileName = Path.Combine(directory,"NewId.Tests", "guids.txt");
+        var textsFileName = Path.Combine(directory, "NewId.Tests", "texts.txt");
 
         var newIds = new List<IdGenerator.NewId.NewId>();
 

@@ -13,7 +13,17 @@ public class When_generating_id
 
     private ITickProvider _tickProvider;
     private IWorkerIdProvider _workerIdProvider;
+    
+    public When_generating_id()
+    {
+        _start = DateTime.UtcNow;
+        _stopwatch = Stopwatch.StartNew();
 
+        _tickProvider = new MockTickProvider(GetTicks());
+        _workerIdProvider = new MockNetworkProvider(BitConverter.GetBytes(1234567890L));
+        _processIdProvider = new MockProcessIdProvider(BitConverter.GetBytes(10));
+    }
+    
     [Fact]
     public void Should_match_when_all_providers_equal()
     {
@@ -121,17 +131,6 @@ public class When_generating_id
         var nid2 = id2.ToNewIdFromSequential();
 
         Assert.Equal(nid, nid1);
-    }
-
-    //[SetUp]
-    public void Init()
-    {
-        _start = DateTime.UtcNow;
-        _stopwatch = Stopwatch.StartNew();
-
-        _tickProvider = new MockTickProvider(GetTicks());
-        _workerIdProvider = new MockNetworkProvider(BitConverter.GetBytes(1234567890L));
-        _processIdProvider = new MockProcessIdProvider(BitConverter.GetBytes(10));
     }
 
     private long GetTicks()
