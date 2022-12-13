@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
+using ManagedCode.IdGenerator.ConsistentHashing;
 
 namespace ManagedCode.IdGenerator.Benchmarks;
 
@@ -11,68 +12,54 @@ namespace ManagedCode.IdGenerator.Benchmarks;
 [GcForce]
 public class HashBenchmarks
 {
-    private const string fiveEncoded = "nR";
-    private readonly Hashids.Hashids _hashids;
-    private readonly string _hex = "507f1f77bcf86cd799439011";
-    private readonly int[] _ints = { 12345, 1234567890, int.MaxValue };
-    private readonly long[] _longs = { 12345, 1234567890123456789, long.MaxValue };
-
-    public HashBenchmarks()
-    {
-        _hashids = new Hashids.Hashids();
-    }
+    private string[] _servers = Enumerable.Range(1, 50).Select(s => "server" + s).ToArray();
 
     [Benchmark]
-    public void RoundtripInts()
+    public void ConsistentHashing()
     {
-        var encodedValue = _hashids.Encode(_ints);
-        var decodedValue = _hashids.Decode(encodedValue);
+        var hash = new ConsistentHash.ConsistentHash<string>();
+        hash.Init(_servers);
+
+        for (int i = 0; i < 10_000; i++)
+        {
+            var node = hash.GetNode(i.ToString());
+        }
+    }
+    
+    [Benchmark]
+    public void HashRing()
+    {
+        var hash = new HashRing<string>();
+        uint number = 1;
+        foreach (var item in _servers)
+        {
+            hash.AddNode(item, number);
+            number++;
+        }
+        
+
+        for (int i = 0; i < 10_000; i++)
+        {
+            var node = hash.GetNode(Convert.ToUInt32(i));
+        }
+    }
+    
+    [Benchmark]
+    public void ConsistentSharp()
+    {
+        var hash = new ManagedCode.IdGenerator.ConsistentSharp.ConsistentHash();
+        uint number = 1;
+        foreach (var item in _servers)
+        {
+            hash.Add(item);
+            number++;
+        }
+        
+        for (int i = 0; i < 10_000; i++)
+        {
+            var node = hash.Get(i.ToString());
+        }
     }
 
-    [Benchmark]
-    public void RoundtripLongs()
-    {
-        var encodedValue = _hashids.EncodeLong(_longs);
-        var decodedValue = _hashids.DecodeLong(encodedValue);
-    }
-
-    [Benchmark]
-    public void RoundtripHex()
-    {
-        var encodedValue = _hashids.EncodeHex(_hex);
-        var decodedValue = _hashids.DecodeHex(encodedValue);
-    }
-
-    [Benchmark]
-    public void SingleNumber()
-    {
-        var encoded = _hashids.Encode(5);
-        var encodeLong = _hashids.EncodeLong(5);
-    }
-
-    [Benchmark]
-    public long[] DecodeNumbers()
-    {
-        return _hashids.DecodeLong(fiveEncoded);
-    }
-
-    [Benchmark]
-    public long DecodeSingleNumber()
-    {
-        return _hashids.DecodeSingleLong(fiveEncoded);
-    }
-
-    [Benchmark]
-    public void RoundtripSingle()
-    {
-        var encoded = _hashids.EncodeLong(5L);
-        var decodeSingleLong = _hashids.DecodeSingleLong(encoded);
-    }
-
-    [Benchmark]
-    public void SingleNumberAsParams()
-    {
-        var encoded = _hashids.Encode(new[] { 1 });
-        var encodedLong = _hashids.EncodeLong(new[] { (long)1 });
-    }
+   
 }
