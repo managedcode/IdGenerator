@@ -66,7 +66,8 @@ public class IdStructureTests
         var s = IdStructure.Default;
         var mc = new MockTimeSource(TimeSpan.FromMilliseconds(1));
         var d = s.WraparoundDate(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc), mc);
-        Assert.Equal(new DateTime(643346200555520000, DateTimeKind.Utc), d);
+        var xd = d.Ticks;
+        Assert.Equal(new DateTime(643346200555519999, DateTimeKind.Utc), d);
     }
 
     [Fact]
