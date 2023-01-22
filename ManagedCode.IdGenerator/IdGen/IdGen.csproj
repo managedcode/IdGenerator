@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard1.1;netstandard2.0</TargetFrameworks>
+		<Authors>RobIII</Authors>
+		<Company>Devcorner.nl</Company>
+		<PackageId>IdGen</PackageId>
+		<Product>IdGen</Product>
+		<Copyright>Copyright © 2015 - 2022 Devcorner.nl</Copyright>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/RobThree/IdGen</PackageProjectUrl>
+		<PackageTags>scalable unique id generator distributed</PackageTags>
+		<PackageReleaseNotes>Added NetStandard 2.0</PackageReleaseNotes>
+		<Description>Twitter Snowflake-alike ID generator for .Net</Description>
+		<Version>3.0.3</Version>
+		<RootNamespace>IdGen</RootNamespace>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageIconUrl />
+		<RepositoryUrl>https://github.com/RobThree/IdGen</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<Nullable>enable</Nullable>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisLevel>latest</AnalysisLevel>
+		<LangVersion>latest</LangVersion>
+		<Configurations>Debug;Release;ReleaseWithDocumentation</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.1|AnyCPU'">
+		<DocumentationFile>bin\Release\IdGen.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='ReleaseWithDocumentation|netstandard1.1|AnyCPU'">
+	  <DocumentationFile>bin\Release\IdGen.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="IsExternalInit" Version="1.0.3">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+</Project>

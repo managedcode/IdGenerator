@@ -7,6 +7,7 @@ UUIDs:
 https://github.com/ullmark/hashids.net
 https://github.com/phatboyg/NewId
 https://github.com/SergiySeletsky/Unified
+https://github.com/RobThree/IdGen
 
 
 Consistent hashing:

@@ -44,6 +44,13 @@ public class UuidBenchmarks
     }
     
     [Benchmark]
+    public long IdGen_CreateId()
+    {
+        var generator = new IdGen.IdGenerator(0);
+        return generator.CreateId();
+    }
+    
+    [Benchmark]
     public string Hashids_Encode()
     {
         return new Hashids.Hashids().Encode(100500);
