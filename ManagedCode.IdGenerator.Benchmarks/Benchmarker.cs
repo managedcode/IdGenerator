@@ -4,7 +4,7 @@ using Unified;
 
 namespace ManagedCode.IdGenerator.Benchmarks;
 
-[SimpleJob(RunStrategy.ColdStart, targetCount: 3)]
+[SimpleJob(RunStrategy.ColdStart, iterationCount: 3)]
 [MemoryDiagnoser]
 [MemoryRandomization]
 [DisassemblyDiagnoser]
